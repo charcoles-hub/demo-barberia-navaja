@@ -1,20 +1,372 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Nav from '../components/Nav.astro';
-import Hero from '../components/Hero.astro';
-import Features from '../components/Features.astro';
-import Pricing from '../components/Pricing.astro';
-import Contact from '../components/Contact.astro';
-import Footer from '../components/Footer.astro';
+const services = [
+  { n: "Corte de pelo", d: "Asesorado, lavado y acabado a navaja", p: "15" },
+  { n: "Corte + Barba", d: "El clásico completo con toalla caliente", p: "22", star: true },
+  { n: "Afeitado a navaja", d: "Ritual tradicional, piel de seda", p: "14" },
+  { n: "Arreglo de barba", d: "Perfilado, recorte y aceites", p: "12" },
+  { n: "Ritual completo", d: "Corte, barba, afeitado y facial", p: "35" },
+  { n: "Corte infantil", d: "Para los más peques, sin prisas", p: "12" },
+];
+const ritual = [
+  { t: "Te sientas", d: "Una bebida, el sillón de cuero, sin reloj. Empieza el rato para ti." },
+  { t: "Toalla caliente", d: "Vapor y aceites preparan la piel. El afeitado clásico empieza aquí." },
+  { t: "La navaja", d: "Pulso firme y filo limpio. El acabado que una máquina no da." },
+];
 ---
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Navaja & Co · Barbería clásica en Barcelona. Corte a navaja, barba y afeitado tradicional con toalla caliente. Reserva online." />
+    <title>Navaja &amp; Co · Barbería clásica · Barcelona</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- Grano de película -->
+    <svg class="grain" aria-hidden="true"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(#n)"/></svg>
 
-<Layout>
-  <Nav />
-  <main>
-    <Hero />
-    <Features />
-    <Pricing />
-    <Contact />
-  </main>
-  <Footer />
-</Layout>
+    <!-- Firma: barra lateral con poste animado + wordmark rotado -->
+    <aside class="rail" aria-hidden="true">
+      <span class="pole"></span>
+      <span class="rail-text">EST. 1998 — Barcelona</span>
+    </aside>
+
+    <header class="bar">
+      <a href="#top" class="wordmark">Navaja<span>&amp;</span>Co</a>
+      <nav class="bar-nav">
+        <a href="#ritual">El ritual</a>
+        <a href="#carta">La carta</a>
+        <a href="#visita">Visítanos</a>
+      </nav>
+      <a href="#visita" class="btn btn-sm">Reservar</a>
+    </header>
+
+    <main id="top">
+      <!-- HERO -->
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Barbería clásica · Barcelona</p>
+          <h1>Afeitarse no<br/>debería tener<br/><em>prisa.</em></h1>
+          <p class="lead">Corte a navaja, barba y afeitado tradicional con toalla caliente. Reservas en 30 segundos y entras directo — sin colas, sin relojes.</p>
+          <div class="hero-cta">
+            <a href="#visita" class="btn">Reservar cita</a>
+            <a href="#carta" class="link-arrow">Ver la carta →</a>
+          </div>
+        </div>
+        <div class="hero-frame" aria-hidden="true">
+          <div class="frame-inner">
+            <svg viewBox="0 0 200 260" class="razor"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M40 70 C 70 60, 150 80, 168 120 C 150 130, 70 120, 40 110 Z"/><path d="M40 110 C 30 130, 30 180, 60 220"/><circle cx="62" cy="226" r="6"/><path d="M168 120 l 14 -10"/></g></svg>
+            <span class="frame-label">Hojas templadas a mano</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Marquee -->
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee-track">
+          <span>Corte a navaja · Barba · Afeitado clásico · Toalla caliente · Ritual completo · </span>
+          <span>Corte a navaja · Barba · Afeitado clásico · Toalla caliente · Ritual completo · </span>
+        </div>
+      </div>
+
+      <!-- EL RITUAL -->
+      <section id="ritual" class="ritual">
+        <header class="sec-head">
+          <p class="eyebrow">Cómo trabajamos</p>
+          <h2>No es un corte.<br/>Es un <em>rato para ti.</em></h2>
+        </header>
+        <ol class="steps">
+          {ritual.map((s, i) => (
+            <li class="step" data-reveal>
+              <span class="step-num">{String(i + 1).padStart(2, "0")}</span>
+              <h3>{s.t}</h3>
+              <p>{s.d}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <!-- CARTA -->
+      <section id="carta" class="carta">
+        <header class="sec-head center">
+          <p class="eyebrow">La carta</p>
+          <h2>Precios sin sorpresas</h2>
+        </header>
+        <ul class="menu">
+          {services.map((s) => (
+            <li class={`menu-row${s.star ? " is-star" : ""}`} data-reveal>
+              <div class="menu-name">
+                <span class="menu-title">{s.n}{s.star && <span class="tag">El favorito</span>}</span>
+                <span class="menu-desc">{s.d}</span>
+              </div>
+              <span class="dots" aria-hidden="true"></span>
+              <span class="menu-price">{s.p}<small>€</small></span>
+            </li>
+          ))}
+        </ul>
+        <p class="carta-foot">Sin cita también atendemos por orden de llegada. Pago en efectivo o tarjeta.</p>
+      </section>
+
+      <!-- Testimonio -->
+      <section class="quote">
+        <blockquote data-reveal>
+          <p>“Entré con prisa y salí con ganas de volver. La toalla caliente y el afeitado a navaja son <em>otro nivel.</em>”</p>
+          <cite>— Marc R., cliente desde 2019</cite>
+        </blockquote>
+      </section>
+
+      <!-- VISITA -->
+      <section id="visita" class="visita">
+        <div class="visita-info">
+          <p class="eyebrow">Visítanos</p>
+          <h2>Pásate cuando<br/>quieras afeitarte<br/><em>en serio.</em></h2>
+          <dl class="facts">
+            <div><dt>Dónde</dt><dd>Carrer de Gràcia 88<br/>08012 Barcelona</dd></div>
+            <div><dt>Horario</dt><dd>Mar–Sáb · 10:00 – 20:30<br/>Domingo y lunes cerrado</dd></div>
+            <div><dt>Reservas</dt><dd>+34 600 333 444<br/>hola@navajaco.es</dd></div>
+          </dl>
+        </div>
+        <form class="visita-form" action="https://api.web3forms.com/submit" method="POST">
+          <input type="hidden" name="access_key" value="TU-ACCESS-KEY-WEB3FORMS" />
+          <input type="hidden" name="subject" value="Nueva reserva — Navaja & Co" />
+          <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" />
+          <h3>Reserva tu cita</h3>
+          <label>Nombre<input name="name" required autocomplete="name" /></label>
+          <label>Teléfono<input name="phone" required autocomplete="tel" inputmode="tel" /></label>
+          <label>¿Qué te hacemos?
+            <select name="service">
+              {services.map((s) => <option>{s.n}</option>)}
+            </select>
+          </label>
+          <button type="submit" class="btn btn-block">Pedir cita</button>
+          <p class="form-note">Te confirmamos por WhatsApp en menos de una hora.</p>
+        </form>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <span class="wordmark sm">Navaja<span>&amp;</span>Co</span>
+      <p>Barbería clásica desde 1998 · Barcelona</p>
+      <div class="foot-social">
+        <a href="#">Instagram</a><a href="#">TikTok</a>
+      </div>
+    </footer>
+
+    <script>
+      const io = new IntersectionObserver((es) => {
+        for (const e of es) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      }, { threshold: 0.18 });
+      document.querySelectorAll('[data-reveal]').forEach((el) => io.observe(el));
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --bg: #17100e;
+    --bg-2: #1f1613;
+    --oxblood: #5e1d1f;
+    --oxblood-soft: #7a2a2c;
+    --brass: #c89a47;
+    --brass-bright: #e6c178;
+    --bone: #efe6d6;
+    --muted: #a3917c;
+    --line: #3a2a23;
+    --display: "Fraunces", Georgia, serif;
+    --ui: "Archivo", system-ui, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg); color: var(--bone);
+    font-family: var(--ui); font-size: 17px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased; overflow-x: hidden;
+  }
+  ::selection { background: var(--brass); color: var(--bg); }
+  a { color: inherit; text-decoration: none; }
+  em { font-style: italic; color: var(--brass-bright); }
+
+  .grain {
+    position: fixed; inset: 0; width: 100%; height: 100%;
+    opacity: 0.05; pointer-events: none; z-index: 100; mix-blend-mode: overlay;
+  }
+
+  /* Firma lateral */
+  .rail {
+    position: fixed; left: 0; top: 0; bottom: 0; width: 46px; z-index: 40;
+    display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+    padding: 18px 0; border-right: 1px solid var(--line); background: rgba(0,0,0,.15);
+  }
+  .pole {
+    width: 8px; flex: 1; margin: 16px 0; border-radius: 4px;
+    background-image: repeating-linear-gradient(45deg, var(--oxblood) 0 10px, var(--bone) 10px 20px, var(--brass) 20px 30px);
+    background-size: 100% 42px; animation: pole 1.4s linear infinite;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.3);
+  }
+  @keyframes pole { to { background-position: 0 42px; } }
+  .rail-text {
+    writing-mode: vertical-rl; transform: rotate(180deg);
+    font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted);
+  }
+
+  /* Top bar */
+  .bar {
+    position: sticky; top: 0; z-index: 30;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px clamp(28px, 6vw, 80px) 18px clamp(60px, 6vw, 96px);
+    background: color-mix(in srgb, var(--bg) 86%, transparent);
+    backdrop-filter: blur(10px); border-bottom: 1px solid var(--line);
+  }
+  .wordmark {
+    font-family: var(--display); font-weight: 700; font-size: 26px; letter-spacing: -.01em;
+  }
+  .wordmark span { color: var(--brass); margin: 0 .12em; font-style: italic; font-weight: 500; }
+  .wordmark.sm { font-size: 22px; }
+  .bar-nav { display: flex; gap: 34px; font-size: 14px; letter-spacing: .04em; }
+  .bar-nav a { color: var(--muted); transition: color .25s; }
+  .bar-nav a:hover { color: var(--bone); }
+
+  .btn {
+    display: inline-block; font-family: var(--ui); font-weight: 600; font-size: 15px;
+    letter-spacing: .02em; padding: 14px 28px; border-radius: 2px;
+    background: var(--brass); color: #2a1c0c; border: 1px solid var(--brass);
+    transition: transform .2s, background .25s, box-shadow .25s;
+  }
+  .btn:hover { background: var(--brass-bright); transform: translateY(-2px); box-shadow: 0 10px 26px -10px rgba(200,154,71,.6); }
+  .btn-sm { padding: 10px 20px; font-size: 14px; }
+  .btn-block { width: 100%; padding: 16px; }
+  .link-arrow { color: var(--bone); font-weight: 500; border-bottom: 1px solid var(--line); padding-bottom: 3px; transition: border-color .25s; }
+  .link-arrow:hover { border-color: var(--brass); }
+  .eyebrow {
+    font-size: 12px; letter-spacing: .32em; text-transform: uppercase;
+    color: var(--brass); font-weight: 600; margin-bottom: 22px;
+  }
+
+  /* HERO */
+  .hero {
+    display: grid; grid-template-columns: 1.15fr .85fr; gap: clamp(30px, 5vw, 70px);
+    align-items: center; min-height: 88vh;
+    padding: clamp(50px, 8vw, 90px) clamp(28px, 6vw, 80px) 70px clamp(60px, 7vw, 110px);
+  }
+  .hero h1 {
+    font-family: var(--display); font-weight: 600;
+    font-size: clamp(48px, 8.5vw, 104px); line-height: .94; letter-spacing: -.02em;
+    margin-bottom: 28px;
+  }
+  .lead { max-width: 38ch; color: #cfc1ad; font-size: clamp(16px, 1.6vw, 19px); }
+  .hero-cta { display: flex; align-items: center; gap: 28px; margin-top: 38px; flex-wrap: wrap; }
+  .hero-copy { animation: rise .9s cubic-bezier(.2,.7,.2,1) both; }
+  @keyframes rise { from { opacity: 0; transform: translateY(26px); } }
+
+  .hero-frame {
+    aspect-ratio: 4/5; border: 1px solid var(--line); border-radius: 3px;
+    background: radial-gradient(120% 120% at 30% 20%, var(--oxblood) 0%, #2a1310 55%, #160c0a 100%);
+    padding: 14px; position: relative; animation: rise 1.1s .15s cubic-bezier(.2,.7,.2,1) both;
+  }
+  .frame-inner {
+    height: 100%; border: 1px solid color-mix(in srgb, var(--brass) 40%, transparent);
+    border-radius: 2px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 26px;
+    position: relative;
+  }
+  .frame-inner::before, .frame-inner::after {
+    content: ""; position: absolute; width: 16px; height: 16px; border: 1px solid var(--brass);
+  }
+  .frame-inner::before { top: 12px; left: 12px; border-right: 0; border-bottom: 0; }
+  .frame-inner::after { bottom: 12px; right: 12px; border-left: 0; border-top: 0; }
+  .razor { width: 56%; color: var(--brass-bright); filter: drop-shadow(0 6px 18px rgba(0,0,0,.5)); }
+  .frame-label { font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+
+  /* Marquee */
+  .marquee { overflow: hidden; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--bg-2); }
+  .marquee-track { display: flex; white-space: nowrap; animation: scroll 28s linear infinite; }
+  .marquee-track span {
+    font-family: var(--display); font-style: italic; font-weight: 500;
+    font-size: clamp(22px, 3vw, 34px); color: var(--brass); padding: 18px 0;
+  }
+  @keyframes scroll { to { transform: translateX(-50%); } }
+
+  /* Secciones comunes */
+  section { padding-left: clamp(28px, 6vw, 80px); padding-right: clamp(28px, 6vw, 80px); }
+  .ritual, .carta, .quote, .visita { padding-top: clamp(72px, 10vw, 130px); padding-bottom: clamp(72px, 10vw, 130px); }
+  .ritual, .carta { padding-left: clamp(60px, 7vw, 110px); }
+  .sec-head { margin-bottom: 60px; max-width: 720px; }
+  .sec-head.center { margin-inline: auto; text-align: center; }
+  .sec-head h2, .visita h2 {
+    font-family: var(--display); font-weight: 600;
+    font-size: clamp(34px, 5vw, 60px); line-height: 1.02; letter-spacing: -.02em;
+  }
+  [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+  [data-reveal].in { opacity: 1; transform: none; }
+
+  /* Ritual */
+  .steps { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(24px, 4vw, 56px); }
+  .step { border-top: 1px solid var(--line); padding-top: 26px; }
+  .step-num { font-family: var(--display); font-size: 15px; color: var(--brass); display: block; margin-bottom: 18px; letter-spacing: .1em; }
+  .step h3 { font-family: var(--display); font-weight: 600; font-size: 26px; margin-bottom: 12px; }
+  .step p { color: var(--muted); }
+
+  /* Carta */
+  .carta { background: linear-gradient(180deg, transparent, rgba(94,29,31,.08) 40%, transparent); }
+  .menu { list-style: none; max-width: 760px; margin: 0 auto; }
+  .menu-row { display: flex; align-items: baseline; gap: 14px; padding: 22px 4px; border-bottom: 1px solid var(--line); }
+  .menu-row.is-star { padding-inline: 22px; margin-inline: -22px; background: rgba(200,154,71,.06); border-radius: 3px; border-bottom-color: transparent; }
+  .menu-name { display: flex; flex-direction: column; gap: 5px; }
+  .menu-title { font-family: var(--display); font-weight: 600; font-size: clamp(19px, 2.4vw, 24px); display: flex; align-items: center; gap: 12px; }
+  .tag { font-family: var(--ui); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--bg); background: var(--brass); padding: 3px 9px; border-radius: 2px; }
+  .menu-desc { font-size: 14.5px; color: var(--muted); }
+  .dots { flex: 1; border-bottom: 1.5px dotted var(--line); transform: translateY(-4px); }
+  .menu-price { font-family: var(--display); font-weight: 700; font-size: clamp(24px, 3vw, 32px); color: var(--brass-bright); white-space: nowrap; }
+  .menu-price small { font-size: .55em; margin-left: 2px; }
+  .carta-foot { text-align: center; color: var(--muted); font-size: 14px; margin-top: 34px; }
+
+  /* Testimonio */
+  .quote { text-align: center; }
+  .quote blockquote { max-width: 880px; margin: 0 auto; }
+  .quote p {
+    font-family: var(--display); font-weight: 500; font-style: italic;
+    font-size: clamp(26px, 4.2vw, 46px); line-height: 1.2; letter-spacing: -.01em;
+  }
+  .quote cite { display: block; margin-top: 30px; font-style: normal; font-size: 14px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+
+  /* Visita */
+  .visita { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(36px, 6vw, 90px); align-items: center; background: var(--bg-2); }
+  .facts { margin-top: 44px; display: grid; gap: 26px; }
+  .facts dt { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--brass); margin-bottom: 7px; }
+  .facts dd { color: var(--bone); line-height: 1.5; }
+  .visita-form { background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: clamp(26px, 3vw, 40px); box-shadow: 0 30px 70px -40px #000; }
+  .visita-form h3 { font-family: var(--display); font-weight: 600; font-size: 26px; margin-bottom: 26px; }
+  .visita-form label { display: block; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 18px; }
+  .visita-form input, .visita-form select {
+    width: 100%; margin-top: 8px; padding: 13px 14px; background: var(--bg-2);
+    border: 1px solid var(--line); border-radius: 2px; color: var(--bone);
+    font-family: var(--ui); font-size: 16px; text-transform: none; letter-spacing: normal;
+    transition: border-color .25s;
+  }
+  .visita-form input:focus, .visita-form select:focus { outline: none; border-color: var(--brass); }
+  .form-note { text-align: center; font-size: 13px; color: var(--muted); margin-top: 16px; text-transform: none; letter-spacing: normal; }
+
+  /* Footer */
+  .foot {
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+    padding: 34px clamp(28px, 6vw, 80px) 34px clamp(60px, 7vw, 110px); border-top: 1px solid var(--line);
+  }
+  .foot p { color: var(--muted); font-size: 14px; }
+  .foot-social { display: flex; gap: 22px; font-size: 14px; }
+  .foot-social a { color: var(--muted); transition: color .25s; }
+  .foot-social a:hover { color: var(--brass); }
+
+  /* Responsive */
+  @media (max-width: 860px) {
+    .bar-nav { display: none; }
+    .hero { grid-template-columns: 1fr; min-height: auto; padding-top: 50px; }
+    .hero-frame { max-width: 360px; }
+    .steps { grid-template-columns: 1fr; }
+    .visita { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, [data-reveal] { animation: none !important; transition: none !important; opacity: 1 !important; transform: none !important; }
+  }
+</style>

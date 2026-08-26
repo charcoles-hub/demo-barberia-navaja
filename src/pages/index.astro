@@ -7,6 +7,11 @@ const services = [
   { n: "Ritual completo", d: "Corte, barba, afeitado y facial", p: "35" },
   { n: "Corte infantil", d: "Para los más peques, sin prisas", p: "12" },
 ];
+const reviews = [
+  { n: "Marc R.", a: "M", t: "hace 2 semanas", q: "Entré con prisa y salí con ganas de volver. La toalla caliente y el afeitado a navaja son otro nivel." },
+  { n: "Jordi P.", a: "J", t: "hace 1 mes", q: "Llevo dos años viniendo. Nunca he esperado más de cinco minutos y el corte siempre sale igual de bien." },
+  { n: "Aleix V.", a: "A", t: "hace 1 mes", q: "Reservé por la web un domingo por la noche para el martes. Sin llamadas, sin líos. Muy recomendable." },
+];
 const ritual = [
   { t: "Te sientas", d: "Una bebida, el sillón de cuero, sin reloj. Empieza el rato para ti." },
   { t: "Toalla caliente", d: "Vapor y aceites preparan la piel. El afeitado clásico empieza aquí." },
@@ -20,6 +25,14 @@ const ritual = [
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Navaja & Co · Barbería clásica en Barcelona. Corte a navaja, barba y afeitado tradicional con toalla caliente. Reserva online." />
     <title>Navaja &amp; Co · Barbería clásica · Barcelona</title>
+    <meta name="theme-color" content="#17100e" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Navaja & Co · Barbería clásica en Barcelona" />
+    <meta property="og:description" content="Corte a navaja, barba y afeitado tradicional con toalla caliente. Reserva en 30 segundos." />
+    <meta property="og:image" content="https://charcoles-hub.github.io/demo-barberia-navaja/img/og.jpg" />
+    <meta property="og:url" content="https://charcoles-hub.github.io/demo-barberia-navaja/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href={`${import.meta.env.BASE_URL}/favicon.svg`.replace("//","/")} type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -56,9 +69,9 @@ const ritual = [
             <a href="#carta" class="link-arrow">Ver la carta →</a>
           </div>
         </div>
-        <div class="hero-frame" aria-hidden="true">
+        <div class="hero-frame">
           <div class="frame-inner">
-            <svg viewBox="0 0 200 260" class="razor"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M40 70 C 70 60, 150 80, 168 120 C 150 130, 70 120, 40 110 Z"/><path d="M40 110 C 30 130, 30 180, 60 220"/><circle cx="62" cy="226" r="6"/><path d="M168 120 l 14 -10"/></g></svg>
+            <img src={`${import.meta.env.BASE_URL}/img/barbero.webp`.replace("//","/")} alt="Barbero apurando un corte con la navaja" width="1400" height="2100" fetchpriority="high" decoding="async" />
             <span class="frame-label">Hojas templadas a mano</span>
           </div>
         </div>
@@ -89,6 +102,8 @@ const ritual = [
         </ol>
       </section>
 
+      <svg viewBox="0 0 200 260" class="razor-divider" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M40 70 C 70 60, 150 80, 168 120 C 150 130, 70 120, 40 110 Z"/><path d="M40 110 C 30 130, 30 180, 60 220"/><circle cx="62" cy="226" r="6"/><path d="M168 120 l 14 -10"/></g></svg>
+
       <!-- CARTA -->
       <section id="carta" class="carta">
         <header class="sec-head center">
@@ -110,12 +125,28 @@ const ritual = [
         <p class="carta-foot">Sin cita también atendemos por orden de llegada. Pago en efectivo o tarjeta.</p>
       </section>
 
-      <!-- Testimonio -->
+      <!-- Reseñas -->
       <section class="quote">
-        <blockquote data-reveal>
-          <p>“Entré con prisa y salí con ganas de volver. La toalla caliente y el afeitado a navaja son <em>otro nivel.</em>”</p>
-          <cite>— Marc R., cliente desde 2019</cite>
-        </blockquote>
+        <header class="sec-head center">
+          <p class="eyebrow">Lo que dicen</p>
+          <h2>4,9 sobre 5 <em>en Google</em></h2>
+          <p class="reviews-count">187 reseñas · Barcelona</p>
+        </header>
+        <ul class="reviews">
+          {reviews.map((r) => (
+            <li class="review" data-reveal>
+              <div class="review-head">
+                <span class="avatar" aria-hidden="true">{r.a}</span>
+                <div>
+                  <strong>{r.n}</strong>
+                  <span class="review-meta">{r.t}</span>
+                </div>
+              </div>
+              <div class="stars" aria-label="5 de 5 estrellas">★★★★★</div>
+              <p>{r.q}</p>
+            </li>
+          ))}
+        </ul>
       </section>
 
       <!-- VISITA -->
@@ -124,10 +155,14 @@ const ritual = [
           <p class="eyebrow">Visítanos</p>
           <h2>Pásate cuando<br/>quieras afeitarte<br/><em>en serio.</em></h2>
           <dl class="facts">
-            <div><dt>Dónde</dt><dd>Carrer de Gràcia 88<br/>08012 Barcelona</dd></div>
+            <div><dt>Dónde</dt><dd>Carrer de Gràcia 88<br/>08012 Barcelona<br/><span class="fact-extra">L3 Fontana, a 2 minutos</span></dd></div>
             <div><dt>Horario</dt><dd>Mar–Sáb · 10:00 – 20:30<br/>Domingo y lunes cerrado</dd></div>
-            <div><dt>Reservas</dt><dd>+34 600 333 444<br/>hola@navajaco.es</dd></div>
+            <div><dt>Reservas</dt><dd><a href="tel:+34600333444">+34 600 333 444</a><br/><a href="https://wa.me/34600333444">WhatsApp</a> · <a href="mailto:hola@navajaco.es">hola@navajaco.es</a></dd></div>
           </dl>
+          <a class="mapa" href="https://www.google.com/maps/search/?api=1&query=Carrer+de+Gr%C3%A0cia+88+Barcelona" target="_blank" rel="noopener">
+            <img src={`${import.meta.env.BASE_URL}/img/mapa.webp`.replace("//","/")} alt="Mapa de la zona de Gràcia con la barbería señalada" width="1000" height="520" loading="lazy" decoding="async" />
+            <span class="mapa-cta">Cómo llegar →</span>
+          </a>
         </div>
         <form class="visita-form" action="https://api.web3forms.com/submit" method="POST">
           <input type="hidden" name="access_key" value="TU-ACCESS-KEY-WEB3FORMS" />
@@ -146,6 +181,12 @@ const ritual = [
         </form>
       </section>
     </main>
+
+    <nav class="dock" aria-label="Contacto rápido">
+      <a href="tel:+34600333444"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24 11 11 0 0 0 3.5.56 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11 11 0 0 0 .56 3.5 1 1 0 0 1-.25 1z"/></svg>Llamar</a>
+      <a href="https://wa.me/34600333444"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-1.6-.1a13 13 0 0 1-5-3.3 9.4 9.4 0 0 1-2-3.2c-.2-.7 0-1.3.4-1.7l.6-.6c.2-.2.5-.2.7.1l1 1.7c.1.3.1.5 0 .7l-.4.5c-.2.2-.2.4-.1.6a7.6 7.6 0 0 0 3.4 3c.3.1.5.1.7-.1l.6-.7c.2-.2.4-.2.7-.1l1.7.9c.3.1.4.4.3.7z"/></svg>WhatsApp</a>
+      <a href="#visita" class="dock-cta">Reservar cita</a>
+    </nav>
 
     <footer class="foot">
       <span class="wordmark sm">Navaja<span>&amp;</span>Co</span>
@@ -235,7 +276,8 @@ const ritual = [
     background: var(--brass); color: #2a1c0c; border: 1px solid var(--brass);
     transition: transform .2s, background .25s, box-shadow .25s;
   }
-  .btn:hover { background: var(--brass-bright); transform: translateY(-2px); box-shadow: 0 10px 26px -10px rgba(200,154,71,.6); }
+  .btn { transition: background .25s, transform .5s linear(0, .55 18%, 1.04 42%, .98 60%, 1), box-shadow .3s; }
+  .btn:hover { background: var(--brass-bright); transform: translateY(-3px); box-shadow: 0 10px 26px -10px rgba(200,154,71,.6); }
   .btn-sm { padding: 10px 20px; font-size: 14px; }
   .btn-block { width: 100%; padding: 16px; }
   .link-arrow { color: var(--bone); font-weight: 500; border-bottom: 1px solid var(--line); padding-bottom: 3px; transition: border-color .25s; }
@@ -263,20 +305,37 @@ const ritual = [
 
   .hero-frame {
     aspect-ratio: 4/5; border: 1px solid var(--line); border-radius: 3px;
-    background: radial-gradient(120% 120% at 30% 20%, var(--oxblood) 0%, #2a1310 55%, #160c0a 100%);
+    background: #160c0a;
     padding: 14px; position: relative; animation: rise 1.1s .15s cubic-bezier(.2,.7,.2,1) both;
   }
   .frame-inner {
     height: 100%; border: 1px solid color-mix(in srgb, var(--brass) 40%, transparent);
-    border-radius: 2px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 26px;
-    position: relative;
+    border-radius: 2px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 26px;
+    position: relative; overflow: hidden;
   }
-  .frame-inner::before, .frame-inner::after {
+  .frame-inner img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    filter: grayscale(1) contrast(1.08) brightness(.92);
+  }
+  /* duotono granate/latón sobre la foto */
+  .frame-inner::after {
+    content: ""; position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(150deg, var(--oxblood) 0%, #2a1310 60%, #0d0705 100%);
+    mix-blend-mode: color;
+  }
+  .frame-label {
+    position: relative; z-index: 3; margin-bottom: 18px;
+    background: color-mix(in srgb, #0d0705 72%, transparent); padding: 7px 14px; border-radius: 2px;
+    backdrop-filter: blur(3px);
+  }
+  .razor-divider {
+    display: block; width: 54px; margin: 0 auto; color: var(--brass);
+    opacity: .7; padding: 26px 0;
+  }
+  .frame-inner::before {
     content: ""; position: absolute; width: 16px; height: 16px; border: 1px solid var(--brass);
+    top: 12px; left: 12px; border-right: 0; border-bottom: 0; z-index: 3;
   }
-  .frame-inner::before { top: 12px; left: 12px; border-right: 0; border-bottom: 0; }
-  .frame-inner::after { bottom: 12px; right: 12px; border-left: 0; border-top: 0; }
-  .razor { width: 56%; color: var(--brass-bright); filter: drop-shadow(0 6px 18px rgba(0,0,0,.5)); }
   .frame-label { font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
 
   /* Marquee */
@@ -357,6 +416,100 @@ const ritual = [
   .foot-social { display: flex; gap: 22px; font-size: 14px; }
   .foot-social a { color: var(--muted); transition: color .25s; }
   .foot-social a:hover { color: var(--brass); }
+
+
+  /* Reseñas de Google */
+  .reviews-count { color: var(--muted); font-size: 14px; margin-top: 10px; letter-spacing: .04em; }
+  .reviews {
+    list-style: none; display: grid; gap: 18px; grid-template-columns: repeat(3, 1fr);
+    max-width: 1040px; margin-inline: auto;
+  }
+  .review {
+    background: var(--bg-2); border: 1px solid var(--line); border-radius: 4px; padding: 22px 24px;
+  }
+  .review-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .review-head strong { display: block; font-size: 15px; }
+  .avatar {
+    width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center;
+    background: var(--oxblood); color: var(--bone); font-weight: 700; flex: none;
+  }
+  .review-meta { font-size: 12.5px; color: var(--muted); }
+  .stars { color: #f4b400; letter-spacing: 2px; font-size: 15px; margin-bottom: 8px; }
+  .review p { font-size: 15.5px; color: #cfc1ad; text-wrap: pretty; }
+
+  /* Mapa */
+  .mapa {
+    display: block; position: relative; margin-top: 32px; border: 1px solid var(--line);
+    border-radius: 4px; overflow: hidden;
+  }
+  .mapa img { display: block; width: 100%; height: 230px; object-fit: cover; }
+  .mapa-cta {
+    position: absolute; right: 14px; bottom: 14px; background: var(--brass); color: #1a1210;
+    font-size: 13px; font-weight: 700; letter-spacing: .04em; padding: 9px 15px; border-radius: 2px;
+  }
+  .mapa:hover .mapa-cta { background: var(--brass-bright); }
+  .fact-extra { color: var(--muted); font-size: 14px; }
+  .facts a { border-bottom: 1px solid color-mix(in srgb, var(--brass) 45%, transparent); }
+  .facts a:hover { color: var(--brass-bright); }
+
+  /* Barra fija de contacto (solo móvil) */
+  .dock { display: none; }
+  @media (max-width: 860px) {
+    .rail { display: none; }
+    .dock {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+      display: grid; grid-template-columns: 1fr 1fr 1.3fr; gap: 1px;
+      background: var(--line); border-top: 1px solid var(--line);
+      padding-bottom: env(safe-area-inset-bottom);
+      font-size: 13px; letter-spacing: .04em;
+    }
+    .dock a {
+      background: var(--bg-2); color: var(--bone); min-height: 56px;
+      display: flex; align-items: center; justify-content: center; gap: 7px; font-weight: 600;
+    }
+    .dock svg { width: 17px; height: 17px; fill: var(--brass); }
+    .dock-cta { background: var(--brass); color: #1a1210; }
+    body { padding-bottom: 56px; }
+    .reviews { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 84%;
+      overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px;
+      margin-inline: calc(clamp(28px, 6vw, 80px) * -1); padding-inline: clamp(28px, 6vw, 80px);
+      scrollbar-width: none;
+    }
+    .reviews::-webkit-scrollbar { display: none; }
+    .review { scroll-snap-align: center; }
+    /* la foto pasa a ser el fondo del primer pantallazo */
+    .hero { position: relative; padding-top: 118px; padding-bottom: 54px; }
+    .hero-frame {
+      position: absolute; inset: 0; aspect-ratio: auto; border: 0; border-radius: 0;
+      padding: 0; z-index: 0; max-width: none;
+    }
+    .frame-inner { border: 0; }
+    .frame-inner::before { display: none; }
+    .frame-inner img { filter: grayscale(1) contrast(1.04) brightness(.78); object-position: 58% 52%; }
+    .frame-inner::after {
+      background: linear-gradient(178deg, rgba(13,7,5,.30) 0%, rgba(13,7,5,.62) 46%, rgba(13,7,5,.88) 76%, var(--bg) 100%);
+      mix-blend-mode: normal;
+    }
+    .frame-label { display: none; }
+    .hero-copy { position: relative; z-index: 2; }
+  }
+
+  /* Detalles */
+  .hero h1, .sec-head h2, .visita h2 { text-wrap: balance; }
+  .lead, .step p, .menu-desc { text-wrap: pretty; }
+
+  /* Revelado ligado al scroll donde el navegador lo soporta (sin JS) */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      [data-reveal] {
+        opacity: 1; transform: none; transition: none;
+        animation: reveal linear both;
+        animation-timeline: view();
+        animation-range: entry 8% cover 26%;
+      }
+      @keyframes reveal { from { opacity: 0; transform: translateY(24px); } }
+    }
+  }
 
   /* Responsive */
   @media (max-width: 860px) {
